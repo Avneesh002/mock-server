@@ -2,11 +2,14 @@ const url = 'http://localhost:3000/api/todo'
 
 let cont = document.getElementById('container')
 
+let page = 1;
+
 let getData = async () =>{
 
-    let res = await fetch(url);
+    console.log(page)
+    let res = await fetch(`${url}?_page=${page}&_limit=2`);
     res = await res.json()
-    console.log(res)
+    // console.log(res)
     renderDom(res)
 }
 getData()
@@ -105,5 +108,40 @@ let dltBtn = async (id) => {
     })
     getData()
 
+
+}
+
+
+let sort = async () => {
+
+    // using json server so go to json github and find sort
+
+    let res = await fetch(`${url}?_sort=title&_order=desc`)
+    res = await res.json()
+
+    renderDom(res)
+}
+
+let filter = async () => {
+
+    let res = await fetch(`${url}?status=true`)
+    res = await res.json()
+
+    renderDom(res)
+}
+
+let prev = async () => {
+
+    page--
+
+    getData()
+
+}
+
+let next = async () => {
+
+    page++
+
+    getData()
 
 }
